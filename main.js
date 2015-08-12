@@ -26,7 +26,11 @@ var gensy = function (generator, callback) {
 		x.next(result);
 	}
 	function done(error, result) {
-		if (callback) callback(error, result);
+		if (callback) {
+			setImmediate(function () {
+				callback(error, result);
+			});
+		}
 	}
 	var x = generator(next, done);
 	x.next();
