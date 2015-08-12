@@ -16,7 +16,13 @@
  */
 var gensy = function (generator, callback) {
 	function next(error, result) {
-		if (error) return x.throw(error);
+		if (error) {
+			x.throw(error);
+			if (callback) {
+				callback(error);
+			}
+			return;
+		}
 		x.next(result);
 	}
 	function done(error, result) {
@@ -30,12 +36,19 @@ var gensy = function (generator, callback) {
  * Runs a list of generators in order, one by one.
  */
 gensy.series = function (generators, callback) {
+	var results = [];
 	function runNext() {
 		var g = generators.shift();
 		if (!g) {
-			return callback();
+			return callback(null, results);
 		}
-		gensy(g, runNext);
+		gensy(g, function (error, result) {
+			if (error) {
+				return callback(error);
+			}
+			results.push(result);
+			return runNext();
+		});
 	}
 	runNext();
 };
