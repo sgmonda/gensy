@@ -1,0 +1,21 @@
+{
+	"name": "gensy",
+	"version": "0.1.0",
+	"description": "Asynchronous utils focused on generators",
+	"keywords": ["asynchrony", "callback", "generator", "es6", "async"],
+	"homepage": "https://github.com/sgmonda/gensy",
+	"license": "MIT",
+	"main": "main.js",
+	"author": {
+		"name": "Sergio Garcia Mondaray <sgmonda@gmail.com> (http://www.sgmonda.com)"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/sgmonda/gensy"
+	},
+	"dependencies": {},
+	"engines": {
+		"iojs": ">=2.0"
+	},
+	"readmeFilename": "readme.md"
+}
