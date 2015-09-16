@@ -8,6 +8,12 @@
  * Distributed under MIT License
  **/
 
+// Utils
+
+function isGenerator(fn) {
+	return fn.constructor.name === 'GeneratorFunction' || typeof fn.next == 'function';
+}
+
 /**
  * Runs a generator function as follows: function* (next, end) {...}
  * Where "next" is the callback must be passed to every async function called
@@ -55,6 +61,28 @@ gensy.series = function (generators, callback) {
 		});
 	}
 	runNext();
+};
+
+/**
+* Preprocess callback functions passed as arguments, to support generators.
+* If a generator is passed instead of a callback, then a wrapper callback is
+* created.
+*/
+gensy.callback = function (callback) {
+	if (!isGenerator(callback)) {
+		return callback;
+	}
+	var generator = callback;
+	return function (error, data) {
+		if (error) {
+			return setImmediate(function () {
+				generator.throw(error);
+			});
+		}
+		setImmediate(function () {
+			return generator.next(data);
+		});
+	};
 };
 
 /**
