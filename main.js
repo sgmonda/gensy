@@ -22,14 +22,16 @@ function isGenerator(fn) {
  */
 var gensy = function (generator, callback) {
 	function next(error, result) {
-		if (error) {
-			x.throw(error);
-			if (callback) {
-				callback(error);
+		setImmediate(function () {
+			if (error) {
+				x.throw(error);
+				if (callback) {
+					callback(error);
+				}
+				return;
 			}
-			return;
-		}
-		x.next(result);
+			x.next(result);
+		});
 	}
 	function done(error, result) {
 		if (callback) {
