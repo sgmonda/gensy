@@ -42,7 +42,7 @@ gensy(function* (next) {
 Where `foo` is supposed to be an asynchronous function that uses `next` as a callback following the error+result arguments convention:
 
 ```javascript
-function foo(callback) {
+function foo (callback) {
 	...
 	return callback(error, result);
 }
@@ -54,7 +54,7 @@ This usage supports a callback to listen generator end. To use it the generator 
 ```javascript
 var gensy = require('gensy');
 
-function* genA(next, done) {
+function* genA (next, done) {
 	try {
 		var x = yield foo(next);
 		...
